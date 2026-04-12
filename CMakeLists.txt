@@ -6,17 +6,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+set(CMAKE_AUTOMOC ON)
 
 file(GLOB_RECURSE ALL_SRCS 
     "src/*.cpp"
     "src/*.hpp"
 )
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/alt-codes.json 
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data)
+
 add_executable(${PROJECT_NAME} ${ALL_SRCS})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     AUTOMOC ON
